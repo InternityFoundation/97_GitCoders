@@ -1,0 +1,581 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Starternity</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300i,400,700,700i,900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico"/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css'%}">
+    <!-- <link rel="stylesheet" href="includes/css/owl.theme.default.min.css"> -->
+</head>
+
+<body>
+    <div class="bg-img1">
+
+    </div>
+
+    <div class="v-navbar">
+        <div class="logo" style="text-align:center;">
+
+            <img src="{% static '/img/cropcare_logo.jpg'%}" alt=""> 
+            <br>
+            FarmCare
+        </div>
+        <div class="v-nav-list">
+            <div class="v-nav-item"> <a href="#about-us"> About </a> </div>
+            <div class="v-nav-item"> <a href="#portfolio"> Portfolio </a> </div>
+
+            <div class="v-nav-item"> <a href="#team"> Team </a> </div>
+
+            <div class="v-nav-item"> <a href="#contact-us"> Contact </a> </div>
+            {% if not user.is_authenticated %}
+            <div class="v-nav-item"> <a href="#" id='login-btn'> Login </a> </div>
+            <div class="v-nav-item"> <a href="#" id="signup-btn"> Register </a> </div>
+             {% else %}
+            <div class="v-nav-item"> <a href="/dashboard"> Dashboard </a> </div>
+            {% endif %}
+        </div>
+    </div>
+    
+<section id="chat-popup" style="display: none;" class="chat-bot">
+          <iframe
+            allow="microphone;"
+            width="350"
+            height="430"
+            src="https://console.dialogflow.com/api-client/demo/embedded/a8166176-b37e-4551-917c-29d26fe6a9d4">
+         </iframe>
+          <div id="chat-popup-close"> Close </div>
+
+        </section>
+        <style>
+            .chat-bot{
+                position: fixed;
+                bottom: 3rem;
+                right: 3rem;
+                font-size: 3rem;
+                z-index: 999;
+            }
+            @media only screen and (max-width: 37.5em) {
+                .chat-bot {
+                    right: .3rem;
+                    bottom: 1rem;
+                }
+            }
+            .chat-bot-button{
+                background-color: white;
+                border-radius: 50%;
+                cursor: pointer;
+                z-index: 99;
+                height:1.4rem;
+                width:2.4rem;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                color: #9c27b0;
+                box-shadow: 5px 5px 10px white;
+            }
+            #chat-popup-close{
+                background-color: white;
+                cursor: pointer;
+                font-size: 1.2rem;
+                z-index: 999;
+                padding: 1rem .3rem;
+                font-weight: bold;
+            }
+        </style>
+        <div id="chat-popup-btn" class="chat-bot chat-bot-button"><i class="fas fa-comment-dots"></i></div>
+         <script>
+        var chat_modal = document.getElementById('chat-popup');
+        var btn = document.getElementById("chat-popup-btn");
+        var chatspan = document.getElementById("chat-popup-close");
+        {% comment %} var signup_span = document.getElementById("signup-close");  {% endcomment %}
+        btn.onclick = function() { // When the user clicks on the button, open the modal
+            chat_modal.style.display = "block";
+        }
+
+        chatspan.onclick = function() {
+            chat_modal.style.display = "none";
+        }
+
+        window.onclick = function(event) { // When the user clicks anywhere outside of the modal, close it
+            if (event.target == chat_modal) {
+                chat_modal.style.display = "none";
+            }
+        }
+
+    </script>
+
+
+
+    <!--   login popup window-->
+    <section id="login-window" class="login-window">
+        <div class="login-window-content">
+            <div class="login-window-banner">
+                Login to enjoy the more features like <br>
+                fast checkout and many more.
+                <br>
+                <br>
+                Have a nice day.
+            </div>
+            <div class="login-window-pannel" >
+                <form method='post' action="{% url 'user:check' %}" >
+                {% comment %} {% url 'user:check' %} {% endcomment %}
+                    {% csrf_token %}
+                    <div> Member Login </div>
+                    <br>
+                    <div class="form-login" >
+                        <input type="text" class="form-control " name="username" placeholder="Email or Phone Number">
+                    </div>
+<!--                    <input class="g-input-field" type="password" name="password" placeholder="Password">-->
+                   <div class="form-login">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <br>
+                    <button type="submit" class="primary-btn">Login</button>
+                    
+<!--
+                    <button class="g-btn g-login-btn" type="submit">
+                        Login
+                    </button>
+-->
+                </form>
+            </div>
+            <span id="close" class="close"> &times; </span>
+        </div>
+    </section>
+<!--   signup popup window-->
+    
+    <section id="signup-window" class="signup-window">
+        <div class="login-window-content">
+            <div class="login-window-banner">
+                SignUp to enjoy the more features like <br>
+                fast checkout and many more. We welcome you.
+                <br>
+                <br>
+                <br>
+                <br>
+                Have a nice day.
+            </div>
+            <div class="login-window-pannel">
+                <form method="post" novalidate="" action="{% url 'user:register' %}" onsubmit="return checkSignUpForm()">
+                {% comment %} {% url 'user:register' %} {% endcomment %}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-login-label" for="id_email">Email address:</label>
+                        <div class="form-login" >
+                        <input type="email" class="form-control" name="email" required id="id_email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-login-label" for="id_password1">Password:</label>
+                        <div class="form-login" >
+                        <input type="password" class="form-control " name="password1" required id="id_password1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-login-label" for="id_password2">Confirm Password:</label>
+                        <div class="form-login" >
+                        <input type="password" class="form-control " name="password2" required id="id_password2">
+                        </div>
+
+
+                        <div class="invalid-feedback" id="sign_up_form_msg">
+                            
+                        </div>
+                    </div>
+<!--
+                    <div class="form-group">
+                        <label class="form-login-label" for="id_is_seller">Do you want to register as a company:</label>
+-->
+                        <input type="checkbox" name="is_seller" hidden checked class="is-valid g-input-field" id="id_is_seller">
+<!--                    </div>-->
+                   <button type="submit" class="btn btn-info btn-block">Sign Up</button>
+
+                    <br>
+                </form>
+                
+            </div>
+            <span id="signup-close" class="close"> &times; </span>
+        </div>
+    </section>
+
+
+    
+    <section class=section1>
+        <div class="content">
+            <div class="primary-heading">
+                Get Monitoring For
+                <br>
+                Your Farm's Health
+            </div>
+            <div class="hashtag">
+                #farmhealthcare
+            </div>
+            <div class="buttons">
+                <div class="button1">
+
+                    <a class="primary-btn" href="#about-us">
+                        <span>Know More</span>
+                    </a>
+                </div>
+
+                <a class="secondary-btn" href="/upload">
+                    <span>Upload Image</span>
+                </a>
+            </div>
+        </div>
+        <div class="image">
+            <img class="bg-img2" src="{% static '/img/bg-img4-1.gif'%}" alt="">
+        </div>
+
+    </section>
+    <div class="section2-heading"  id="about-us">
+        <div class="primary-heading">
+            What's FarmCare
+        </div>
+    </div>
+
+    <section class="section2">
+        <div class="image">
+            <img class="bg-img4" src="{% static '/img/bg-img4-2.png'%}" alt="">
+
+        </div>
+        <div class="content">
+            <ul class="list">
+                <li class="list-item">
+                    <div class="list-img">
+                       <i class="fab fa-pagelines"></i>
+                    </div>
+                    <div class="list-content">
+                        <div class="list-heading">
+                            Livestock Monitor
+                        </div>
+                        <div class="list-text">
+                            Large farm owners can utilize wireless IoT applications 
+                            <br> to collect data regarding the location, well-being, and health of their crops.
+                        </div>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <div class="list-img">
+                       <i class="fab fa-pagelines"></i>
+                    </div>
+                    <div class="list-content">
+                        <div class="list-heading">
+                            Agricultural Drones
+                        </div>
+                        <div class="list-text">
+                            Technology has changed over time and agricultural drones 
+                            <br>
+                            are a very good example of this. 
+                        </div>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <div class="list-img">
+                       <i class="fab fa-pagelines"></i>
+                    </div>
+                    <div class="list-content">
+                        <div class="list-heading">
+                            Precision Farming
+                        </div>
+                        <div class="list-text">
+                            A key component is the use of IT and various items like <br>
+                            sensors and control systems.
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </section>
+    <div class="section3-heading" id="portfolio">
+        <div class="primary-heading">
+            How Does It Helps
+        </div>
+    </div>
+    <section class="section3">
+        <ul class="list">
+            <li class="list-item">
+                <img src="{% static '/img/report-img.jpg'%}" alt="">
+                <div class="list-text">
+                    Get Report for your
+                    crop, soil and animals
+                </div>
+            </li>
+            <li class="list-item">
+                <img src="{% static '/img/Recycling.jpg'%}" alt="">
+                <div class="list-text">
+                    Find right technique
+                </div>
+            </li>
+            <li class="list-item">
+                <img src="{% static '/img/Green-Heart.jpg'%}" alt="">
+                <div class="list-text">
+                    Improve your crop health
+                </div>
+            </li>
+        </ul>
+    </section>
+    {% comment %} <section class="section4">
+        <div class="primary-heading">
+            Checkout Some Of Our Testimonials
+        </div>
+        <!-- <div class="">
+
+        </div> -->
+        <!-- <div class="owl-carousel owl-theme">
+            <div class="item"><h4>1</h4></div>
+            <div class="item"><h4>2</h4></div>
+            <div class="item"><h4>3</h4></div>
+
+        </div> -->
+        <div class="owl-carousel owl-theme testimonial">
+            <div class="item">
+                <img src="{% static '/img/miguel.jpg'%}" alt="">
+                <div class="testimonial-text">
+                    After over 10 years of meditation practice it was a real surprise to see the results of the EEG vrittifitband measurements.
+                    They showed me that I am able to stay in a very focused alpha brainwave state for over 75% of my meditation.
+                    It encourages me to discover more and more effective ways for me and my clients to enter these states of intuition and insight to make profound change in our lifes.
+                </div>
+                <div class="testimonial-name">
+                    Miguel Leonne
+                </div>
+            </div>
+            <div class="item">
+                <img src="{% static '/img/kunal.jpg'%}" alt="">
+                <div class="testimonial-text">
+                        We are living in an age of instant feedback.
+                        The idea and team behind Vritti-band are on the path, to create a product which can help to build awareness and interest in the inner working of our mind.
+                        A beginner or an experienced meditator, Vritti-band will show you how to fine tune your technique and find what method of meditation works best for you.
+                </div>
+                <div class="testimonial-name">
+                        Kunal Joseph
+                </div>
+            </div>
+
+    </section> {% endcomment %}
+
+    <section class="section5">
+        <div class="primary-heading">
+            In Collaboration With
+        </div>
+        <ul class="collab-list">
+            <li class="collab-item">
+                <a href="#" target="_blank">
+                    <img src="{% static '/img/nagarro.png'%}" alt="">
+                </a>
+                </li>
+            <li class="collab-item" >
+                
+                <a href="#" target="_blank">
+                    <img  src="{% static '/img/coding_blocks.png'%}" alt="">
+                </a>
+            </li>
+            {% comment %} <li class="collab-item">
+                <a href="#" target="_blank">
+                    <img src="{% static '/img/collab3.png'%}" alt="">
+                </a>
+            </li> {% endcomment %}
+        </ul>
+
+
+    </section>
+
+    <section class="section6 progress">
+        <div class="primary-heading">
+                Process
+            </div>
+        <img src="{% static '/img/process.png'%}" alt="">
+    </section>
+    <section class="section7 team" id="team">
+        <div class="primary-heading">
+            Team
+        </div>
+        <ul class="team-list">
+            <li class="team-item">
+                <div class="team-image">
+                    <img src="{% static '/img/rajat.jpg'%}" alt="">
+
+                    <a href="https://www.linkedin.com/in/rajatjain1998/" target="_blank">
+                        <img class="team-linkedin" src="{% static '/img/linkedin.png'%}" alt="">
+                    </a> 
+                    <a href="https://www.facebook.com/rajatjain1998" target="_blank">
+                        <img class="team-facebook" src="{% static '/img/facebook1.png'%}" alt="">
+                    </a> 
+                </div>
+                <div class="team-name">
+                    Rajat Jain
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="team-image">
+                    <img src="{% static '/img/kartik.jpg'%}" alt="">
+
+                    <a href="#" target="_blank">
+                        <img class="team-linkedin" src="{% static '/img/linkedin.png'%}" alt="">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img class="team-facebook" src="{% static '/img/facebook1.png'%}" alt="">
+                    </a>
+                </div>
+                <div class="team-name">
+                    Kartik Tyagi
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="team-image">
+                    <img src="{% static '/img/riya.jpeg'%}" alt="">
+
+                    <a href="$" target="_blank">
+                        <img class="team-linkedin" src="{% static '/img/linkedin.png'%}" alt="">
+                    </a>
+                    <a href="$" target="_blank">
+                        <img class="team-facebook" src="{% static '/img/facebook1.png'%}" alt="">
+                    </a>
+                </div>
+                <div class="team-name">
+                    Riya Jain
+                </div>
+            </li>
+
+        </ul>
+    </section>
+    <footer id="contact-us">
+        <ul class="list">
+            <li class="list-item">
+                <div class="footer-heading">
+                    A product of Travelers Team for crop health
+                </div>
+                Jaypee Institute Of Information Technology
+                <br>
+                Noida Sector 62
+                <br>
+                <img src="{% static '/img/phone.png'%}" class="footer-icon" alt="">
+                <span class="footer-contact">
+                    
+                    +91 7017666833
+                </span> 
+                <br>
+                <img src="{% static '/img/email.png'%}" class="footer-icon" alt="">
+                <span class="footer-contact">
+                    mznrajatjain@gmail.com
+                </span> 
+            </li>
+            <li class="list-item">
+                <div class="footer-heading">
+                    Media
+                </div>
+                Mentions
+                <br>
+                Blog
+            </li>
+            <li class="list-item">
+                <div class="footer-heading">
+                    Follow Us
+                </div>
+                #crophealthcare
+                <br>
+                <div class="follow-us">
+
+                    <div class="follow-us-item">
+                        <a href="" target="_blank">
+                            
+                            <img src="{% static '/img/instagram.png'%}" alt="">
+                        </a>
+                    </div>
+                    <div class="follow-us-item">
+                        <a href="" target="_blank">
+                            
+                            <img src="{% static '/img/facebook.png'%}" alt="">
+                        </a>
+                    </div>
+                    <div class="follow-us-item">
+                        <a href="" target="_blank">
+                            
+                            <img src="{% static '/img/whatsapp.png'%}" alt="">
+                            <!-- <img src="includes/img/twitter.png" alt=""> -->
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br>
+        Terms & Conditions | Privacy Policy | &copy;2019 Team Travelers
+        <br>
+    </footer>
+</body>
+<script src="{% static '/js/jquery.min.js'%}"></script>
+<script src="{% static '/js/owl.carousel.min.js'%}"></script>
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                nav: true
+            },
+            600: {
+                items: 2,
+                // items: 3,
+                nav: false
+            },
+            1000: {
+                items: 2,
+                // items: 3,
+                nav: true,
+                loop: false
+            }
+        }
+    })
+</script>
+<!--login popup -->
+    <script>
+        var login_modal = document.getElementById('login-window');
+        var signup_modal = document.getElementById('signup-window');
+        var btn = document.getElementById("login-btn");
+        var signup_btn = document.getElementById("signup-btn");
+        var span = document.getElementById("close");
+        var signup_span = document.getElementById("signup-close");
+        btn.onclick = function() { // When the user clicks on the button, open the modal
+            login_modal.style.display = "block";
+        }
+        signup_btn.onclick = function() {
+            signup_modal.style.display = "block";
+        }
+        span.onclick = function() {
+            login_modal.style.display = "none";
+        }
+        signup_span.onclick = function() {
+            signup_modal.style.display = "none";
+        }
+        window.onclick = function(event) { // When the user clicks anywhere outside of the modal, close it
+            if (event.target == login_modal) {
+                login_modal.style.display = "none";
+            }
+            if (event.target == signup_modal) {
+                signup_modal.style.display = "none";
+            }
+        }
+
+    </script>
+
+</html>

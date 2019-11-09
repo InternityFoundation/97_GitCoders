@@ -1,0 +1,61 @@
+{% extends 'dashboard/dashboard-base.html' %}
+{% load static %}
+
+{% block content %}
+ <link rel="stylesheet" href="{% static 'css/dashboard-upload.css'%}">
+    
+
+    <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+          <div class="col-lg-12 col-md-6 col-sm-6 upload-header">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Livestock healthcare/पशुधन स्वास्थ्य सेवा</h4>
+                  
+                </div>
+       <div class="card-body">
+        <div> Please select the one from below </div>
+            <div class="container">
+                <form method="post" action="/livestock/cat-b" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        
+                    {% for category in data %}
+                    <div class="col-6">
+                        <input type="radio" name="category_a" value="{{category}}">
+                        <img src="{{category.image.url }}">
+                        <br>
+                         {{category}}
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                        {% endfor %}
+                    </div>
+                    {% comment %} <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Surgery/सर्जरी</label>
+                                <input type="radio" class="" value="Yes" name="surgery"> Yes/हाँ
+                                <input type="radio" class="" value="No" name="surgery" checked> No/नहीं
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                    
+                    <button type="submit" class="btn btn-white btn-round">
+                        <i class="material-icons">search</i> Next/परिणाम
+                    </button>
+                </form>
+
+            </div>
+        </div>
+            </div>
+
+    </div>
+    </div>
+    </div>
+    <div>
+
+{% endblock %}

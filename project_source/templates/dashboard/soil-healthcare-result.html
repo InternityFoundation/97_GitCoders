@@ -1,0 +1,36 @@
+{% extends 'dashboard/dashboard-base.html' %}
+{% load static %}
+
+{% block content %}
+ <link rel="stylesheet" href="{% static 'css/dashboard-upload.css'%}">
+    
+
+    <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+          <div class="col-lg-12 col-md-6 col-sm-6 upload-header">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Check soil healthcare</h4>
+                  <p class="card-category"> Data will be taken from IOT sensors in realtime </p>
+                </div>
+              <div class="card-body">
+            <div class="container">
+
+                <h3> {{message}} </h3>
+
+            </div>
+            
+            <h4> <i class="fas fa-chart-bar" style="font-size: 19px;"></i></strong>  <strong> Soil Test Analysis </h4>
+        {% for result in results %}
+        {{result}} <br>
+        {% endfor %}
+        </div>
+            </div>
+
+    </div>
+    </div>
+    </div>
+    <div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'dashboard/dashboard-base.html' %}
+{% load static %}
+
+{% block content %}
+ <link rel="stylesheet" href="{% static 'css/dashboard-upload.css'%}">
+    
+
+    <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+          <div class="col-lg-12 col-md-6 col-sm-6 upload-header">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Check Plant disease/पौधे की बीमारी की जाँच करें</h4>
+                  <p class="card-category"> Upload your plant image and get to know about it <br>
+                  अपने पौधा की छवि अपलोड करें और इसके बारे में जानें
+                   </p>
+                </div>
+       <div class="card-body">
+            <div class="container">
+                <i class="fas fa-seedling plant"></i>
+<!--                <div class="upload-box">-->
+
+                <form method="post" action="/upload-cassava" class="upload-box" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!--                <div class="file-upload-wrapper" data-text="Select your file!">-->
+                    <!--                    <input name="image" type="file" >-->
+                    <!--                </div>-->
+                    <div class="file-upload">
+                        <label for="upload" class="file-upload__label">Upload Mix Background Image
+                        <input id="upload" class="file-upload__input" type="file" name="image">
+                    </div>
+                    <button type="submit" class="upload-button"><i class="fas fa-caret-right"></i></button>
+                </form>
+
+
+                <form method="post" action="/upload" class="upload-box" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!--                <div class="file-upload-wrapper" data-text="Select your file!">-->
+                    <!--                    <input name="image" type="file" >-->
+                    <!--                </div>-->
+                    <div class="file-upload">
+                        <label for="upload" class="file-upload__label">Upload Plant Image
+                        <br>संयंत्र छवि अपलोड करें</label>
+                        <input id="upload" class="file-upload__input" type="file" name="image">
+                    </div>
+                    <button type="submit" class="upload-button"><i class="fas fa-caret-right"></i></button>
+                </form>
+<!--                </div>-->
+
+            </div>
+        </div>
+            </div>
+
+    </div>
+    </div>
+    </div>
+    <div>
+
+{% endblock %}

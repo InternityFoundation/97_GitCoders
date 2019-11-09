@@ -1,0 +1,209 @@
+{% extends 'dashboard/dashboard-base.html' %}
+{% load static %}
+
+{% block content %}
+ <link rel="stylesheet" href="{% static 'css/dashboard-upload.css'%}">
+    
+
+    <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+          <div class="col-lg-12 col-md-6 col-sm-6 upload-header">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Livestock healthcare/पशुधन स्वास्थ्य सेवा</h4>
+                  <p class="card-category"> Data will be taken from IOT sensors in realtime/डेटा को रियल टाइम में IOT सेंसर से लिया जाएगा </p>
+                </div>
+       <div class="card-body">
+        <a href="/livestock/" class="btn btn-success"> Predict Disease Manually <br>
+        स्वयं से रोग का पूर्वानुमान</a>
+
+                <br>
+                <br>
+                <br>
+            <h4> Using IOT sensors: 
+            <br>
+            IOT सेंसर का उपयोग करके:
+            </h4>
+                  <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.load {
+  position: relative;
+  margin: 50px auto;
+  width: 100px;
+  height: 80px;
+}
+
+.gear {
+  position: absolute;
+  {% comment %} z-index: -10; {% endcomment %}
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 5s infinite;
+          animation: spin 5s infinite;
+}
+
+.two {
+  left: 40px;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin-reverse 5s infinite;
+          animation: spin-reverse 5s infinite;
+}
+
+.three {
+  top: 45px;
+  left: -10px;
+  width: 60px;
+  height: 60px;
+}
+
+@-webkit-keyframes spin {
+  50% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  50% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin-reverse {
+  50% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+@keyframes spin-reverse {
+  50% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+
+
+.text {
+  color: lightgray;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+}
+
+</style>
+            <div class="data-loader" id="data-loader" style="display:none">
+              <div class="load">
+                <div class="gear one">
+                  <svg id="blue" viewbox="0 0 100 100" fill="#94DDFF">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6      c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3      l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9      c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                  </svg>
+                </div>
+                <div class="gear two">
+                  <svg id="pink" viewbox="0 0 100 100" fill="#FB8BB9">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6      c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3      l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9      c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                  </svg>
+                </div>
+                <div class="gear three">
+                  <svg id="yellow" viewbox="0 0 100 100" fill="#FFCD5C">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6      c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3      l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9      c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                  </svg>
+                </div>
+                <div class="lil-circle"></div>
+                <svg class="blur-circle">
+                  <filter id="blur">
+                    <fegaussianblur in="SourceGraphic" stddeviation="13"></fegaussianblur>
+                  </filter>
+                </svg>
+              </div>
+            <div class="text">Collecting data from sensors</div>
+            </div>
+
+
+            <div id="data-result" class="container" style="margin-top: 20px; display:none">
+                <form method="post" action="" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Surgery/सर्जरी</label>
+                                <input type="radio" class="" value="Yes" name="surgery"> Yes/हाँ
+                                <input type="radio" class="" value="No" name="surgery" checked> No/नहीं
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Age/आयु</label>
+                                <input type="radio" class="" value="young" name="age"> Young/युवा
+                                <input type="radio" class="" value="adult" name="age" checked> Adult/वयस्क
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Respiratory Rate/श्वसन दर</label>
+                              <input type="text" class="form-control" value="28" name="respiratory_rate">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Rectal Temperature/गुदा का तापमान</label>
+                              <input type="text" class="form-control" value="38.5" name="rectal_temp">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Pulse/पल्स दर</label>
+                              <input type="text" class="form-control" value="66" name="pulse">
+                            </div>
+                          </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Mucous Membrane/श्लेष्मा झिल्ली</label>
+                                <br>
+                                <input type="radio" class="" value="bright_pink" name="mucous_membrane"> Bright Pink/चमकदार गुलाबी
+                                <input type="radio" class="" value="bright_red" name="mucous_membrane" > Bright Red/चमकदार लाल
+                                <input type="radio" class="" value="dark_cyanotic" name="mucous_membrane" > Dark Cyanotic/तिमिर व्युत्पन्न प्रारुप
+                                <input type="radio" class="" value="normal_pink" name="mucous_membrane" > Normal Pink/सामान्य गुलाबी
+                                <input type="radio" class="" value="pale_cyanotic" name="mucous_membrane" checked > Pale Cyanotic/पीला व्युत्पन्न प्रारुप
+                                <input type="radio" class="" value="pale_pink" name="mucous_membrane" > Pale Pink/फीका गुलाबी
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-white btn-round">
+                        <i class="material-icons">search</i> Check/परिणाम
+                    </button>
+                </form>
+
+            </div>
+        </div>
+            </div>
+
+    </div>
+    </div>
+    </div>
+    <div>
+<script>
+setTimeout(function(){ document.getElementById('data-loader').style.display = 'block'; }, 500);
+setTimeout(function(){ document.getElementById('data-loader').style.display = 'none'; }, 5000);
+setTimeout(function(){ document.getElementById('data-result').style.display = 'block'; }, 5100);
+
+</script>
+{% endblock %}

@@ -1,0 +1,103 @@
+@media only screen and (max-width: 37.5em) {
+    .primary-heading {
+        font-size: 2.5rem;
+    }
+    .v-navbar {
+        flex-direction: column;
+        align-items: center;
+        margin: 2rem;
+        }
+    .v-nav-item {
+        font-size: 1.6rem;
+    }
+    .logo{
+        margin: 1rem auto;
+    }
+    .section1 {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .section1 .content {
+        margin: 0;
+        text-align: center;
+        min-width: 100%;
+        /* margin: 0 */
+    }
+    .section1 .buttons {
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .section1 .button1 {
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
+    .section1 .image {
+        width: 80%;
+        margin: 3rem auto;
+    }
+    .section2 {
+        flex-direction: column;
+        padding-bottom: 0rem;
+    }
+    .section2 .image .bg-img4 {
+        margin: 0;
+      }
+    .section2 .list-item {
+        margin: 5rem auto;
+    }
+    .team .team-list {
+        flex-direction: column;
+    }
+    .section3 .list {
+        flex-direction: column;
+        align-items: center;    
+        margin: 2rem auto;
+    }
+    .section3 .list-item {
+        margin: 2rem 0;
+        max-width: 80%;
+    }
+    .section3 .list-item img {
+        height: 16rem;
+    }
+    .section4 {
+        background-size: 1000%;
+    }
+    .section5{
+        margin: 2rem auto; 
+    }
+    .collab-list {
+        flex-direction: column;
+    }
+    .collab-list img{
+        margin: 3rem auto;
+    }
+    .progress .primary-heading{
+        top: 1rem;
+    }
+    .section5 img{
+        width: 10rem;
+    }
+    .team .team-list {
+        margin: 3rem;
+    }
+    .team-item img {
+    width: 80%;
+    }
+    .team-linkedin {
+        right: 10rem;
+      }
+      .team-facebook {
+
+        right: 4.5rem;
+      }
+    footer .list {
+        flex-direction: column;
+    }
+    footer .footer-heading{
+        margin-top: 4rem;
+    }
+}

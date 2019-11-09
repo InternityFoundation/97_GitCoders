@@ -1,0 +1,1 @@
+python flow --model cfg/yolo-new.cfg --imgdir test/images --load -1 --labels labels.txt

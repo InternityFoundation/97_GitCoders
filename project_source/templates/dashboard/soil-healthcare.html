@@ -1,0 +1,201 @@
+{% extends 'dashboard/dashboard-base.html' %}
+{% load static %}
+
+{% block content %}
+ <link rel="stylesheet" href="{% static 'css/dashboard-upload.css'%}">
+    
+
+    <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+          <div class="col-lg-12 col-md-6 col-sm-6 upload-header">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Soil healthcare/मिट्टी स्वास्थ्य सेवा</h4>
+                  <p class="card-category"> Data will be taken from IOT sensors in realtime/डेटा को रियल टाइम में IOT सेंसर से लिया जाएगा</p>
+                </div>
+       <div class="card-body">
+            <div class="container">
+
+
+      <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.load {
+  position: relative;
+  margin: 50px auto;
+  width: 100px;
+  height: 80px;
+}
+
+.gear {
+  position: absolute;
+  {% comment %} z-index: -10; {% endcomment %}
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 5s infinite;
+          animation: spin 5s infinite;
+}
+
+.two {
+  left: 40px;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin-reverse 5s infinite;
+          animation: spin-reverse 5s infinite;
+}
+
+.three {
+  top: 45px;
+  left: -10px;
+  width: 60px;
+  height: 60px;
+}
+
+@-webkit-keyframes spin {
+  50% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  50% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin-reverse {
+  50% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+@keyframes spin-reverse {
+  50% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+
+
+.text {
+  color: lightgray;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+}
+
+</style>
+<div class="data-loader" id="data-loader" style="display:none">
+              <div class="load">
+                <div class="gear one">
+                  <svg id="blue" viewbox="0 0 100 100" fill="#94DDFF">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6      c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3      l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9      c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                  </svg>
+                </div>
+                <div class="gear two">
+                  <svg id="pink" viewbox="0 0 100 100" fill="#FB8BB9">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6      c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3      l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9      c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                  </svg>
+                </div>
+                <div class="gear three">
+                  <svg id="yellow" viewbox="0 0 100 100" fill="#FFCD5C">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6      c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3      l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9      c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                  </svg>
+                </div>
+                <div class="lil-circle"></div>
+                <svg class="blur-circle">
+                  <filter id="blur">
+                    <fegaussianblur in="SourceGraphic" stddeviation="13"></fegaussianblur>
+                  </filter>
+                </svg>
+              </div>
+            <div class="text">Collecting data from sensors</div>
+            </div>
+            <div id="data-result" style="display:none">
+                <form method="post" action="" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                                <!-- 398,49,257, .6235 ,6.901,29 -->
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Nitrogen/नाइट्रोजन</label>
+                                <input type="text" class="form-control" value="398" name="nitrogen">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Phosphorous/फ़ास्फ़रोस</label>
+                              <input type="text" class="form-control" value="49" name="phosphorous">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Potassium/पोटैशियम</label>
+                              <input type="text" class="form-control" value="257" name="potasium">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Calcium/कैल्शियम</label>
+                              <input type="text" class="form-control" value=".6235" name="calcium">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">pH/पीएच</label>
+                              <input type="text" class="form-control" value="6.901" name="ph">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Temperature/तापमान</label>
+                              <input type="text" class="form-control" value="29" name="temp">
+                            </div>
+                          </div>
+                    </div>
+                    <button type="submit" class="btn btn-white btn-round">
+                        <i class="material-icons">search</i> Check/परिणाम
+                    </button>
+                    <!-- <button type="submit" class="">Submit</button> -->
+                </form>
+               </div>
+
+            </div>
+        </div>
+            </div>
+
+    </div>
+    </div>
+    </div>
+    <div>
+<script>
+{% comment %} #data-result{
+  display: none;
+} {% endcomment %}
+</script>
+<script>
+setTimeout(function(){ document.getElementById('data-loader').style.display = 'block'; }, 500);
+setTimeout(function(){ document.getElementById('data-loader').style.display = 'none'; }, 5000);
+setTimeout(function(){ document.getElementById('data-result').style.display = 'block'; }, 5100);
+
+</script>
+
+</script>
+{% endblock %}
